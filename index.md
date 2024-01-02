@@ -15,6 +15,6 @@ hero:
       link: /running-pixelfed/prerequisites
     - theme: alt
       text: ActivityPub Documentation
-      link: /spec/activitypub
+      link: /spec/ActivityPub.html
 ---
 

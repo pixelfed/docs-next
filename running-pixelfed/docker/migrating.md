@@ -6,6 +6,36 @@ There are [*a lot* of changes](https://github.com/pixelfed/pixelfed/pull/4844) i
 
 ### A single `Dockerfile`
 
+TODO
+
+### Included Nginx Proxy
+
+TODO
+
+### Included LetsEncrypt
+
+TODO
+
+### New Docker Compose file
+
+TODO
+
+### New data paths
+
+TODO
+
+### New Redis version
+
+TODO
+
+### New MariaDB version
+
+TODO
+
+### No Docker networks
+
+TODO
+
 ### Using `bind` volumes
 
 The old `docker-compose.yml` configuration file [declared four anonymous Docker volumes](https://github.com/pixelfed/pixelfed/blob/b1ff44ca2f75c088a11576fb03b5bad2fbed4d5c/docker-compose.yml#L72-L76) for storing Pixelfed related data within.

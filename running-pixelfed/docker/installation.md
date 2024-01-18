@@ -28,7 +28,9 @@ git clone https://github.com/pixelfed/pixelfed.git /data/pixelfed
 cd /data/pixelfed
 ```
 
-## Copy the example file
+## Configuring your site
+
+### Copy the example file
 
 Pixelfed contains a default configuration file (`.env.docker`) you should use as a starter; however, before editing anything, make a copy of it and put it in the *right* place (`.env`).
 
@@ -38,7 +40,7 @@ Run the following command to copy the file:
 cp .env.docker .env
 ```
 
-## Modify the config file
+### Modify config file
 
 The configuration file is *quite* long, but the good news is that you can ignore *most* of it; most of the *server-specific* settings are configured for you out of the box.
 
@@ -63,7 +65,7 @@ You can skip the following sections since they are already configured/automated 
 * `Database` (except for `DB_PASSWORD`)
 * `One-time setup tasks`
 
-## Starting the services
+### Starting the service
 
 With everything in place and (hopefully) well-configured, we can now go ahead and start our services by running:
 

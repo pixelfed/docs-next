@@ -2,9 +2,9 @@
 
 The Pixelfed Dockerfile support multiple target *runtimes* ([Apache](#apache), [Nginx + FPM](#nginx), and [fpm](#fpm)).
 
-You can consider a *runtime* target as individual Dockerfiles, but instead, all of them are build from the same optimized Dockerfile, sharing +90% of their configuration and packages.
+You can consider a *runtime* target as individual Dockerfiles, but instead, all of them are built from the same optimized Dockerfile, sharing +90% of their configuration and packages.
 
-**If you are unsure of which runtime to choose, please use the [Apache runtime](#apache) it's the most straightforward one and also the default**
+**If you are unsure of which runtime to choose, please use the [Apache runtime](#apache); it's the most straightforward one and also the default**
 
 ## Apache
 

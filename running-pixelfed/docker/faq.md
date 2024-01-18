@@ -20,7 +20,7 @@ No problem! All you have to do is:
     * This disabled the `proxy-acme` service in `docker-compose.yml`.
     * It does *not* disable the `proxy` service.
 1. Put your certificates in `${DOCKER_ALL_HOST_CONFIG_ROOT_PATH}/proxy/certs` (e.g. `./docker-compose/config/proxy/certs`)
-    * You may need to create this folder manually if it does not exists.
+    * You may need to create this folder manually if it does not exist.
     * The following files are expected to exist in the directory for the proxy to detect and use them automatically (this is the same directory and file names as LetsEncrypt uses)
         1. `${APP_DOMAIN}.cert.pem`
         1. `${APP_DOMAIN}.chain.pem`

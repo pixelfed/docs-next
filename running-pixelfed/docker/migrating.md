@@ -21,7 +21,7 @@ The consequence of this change is that *all* data stored in the - now unsupporte
 * The `app-bootstrap` volume does not contain any important data - all of it will be generated automatically in the new setup on startup. We will *not* be migrating this!
 
 ::: tip
-Please see the [Migrating off anonymous Docker Compose volumes](#migrating-off-anonymous-docker-volumes) section for how to move your data.
+Please see the [Migrating off anonymous Docker Compose volumes](#anonymous-volume-migration) section for how to move your data.
 :::
 
 ## Anonymous volume migration

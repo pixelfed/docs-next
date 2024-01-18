@@ -14,6 +14,13 @@ A Virtual Private Server (VPS) or Dedicated Server (also known as `root server`)
 * [DigitalOcean VPS](https://digitalocean.com/)
 * [Hetzner](https://www.hetzner.com/)
 
+## Software
+
+Required software to be installed on your server
+
+* `git` can be installed with `apt-get install git` on Debian/Ubuntu
+* `docker` can be installed by [following the official Docker documentation](https://docs.docker.com/engine/install/)
+
 ## Hardware
 
 Hardware requirements depends on the amount of users you have (or plan to have), and how active they are.
@@ -38,7 +45,7 @@ A safe starter/small instance hardware for 25 users and blow are:
   * Example for Ubuntu using [`ufw`](https://help.ubuntu.com/community/UFW) for port `80`: `ufw allow 80`
   * Example for Ubuntu using [`ufw`](https://help.ubuntu.com/community/UFW) for port `443`: `ufw allow 443`
 
-### Optional
+## Optional
 
 * An **Email/SMTP provider** for sending e-mails to your users, such as e-mail confirmation and notifications.
 * An **Object Storage** provider for storing all images remotely, rather than locally on your server.
@@ -70,10 +77,3 @@ It's beyond the cope of this document to detail which provider to pick, or how t
 * [R2](https://www.cloudflare.com/developer-platform/r2/) by CloudFlare has cheap storage, free *egress* (e.g. people downloading images) and included (and free) Content Delivery Network (CDN).
 * [B2 cloud storage](https://www.backblaze.com/cloud-storage) by Backblaze.
 * [Simple Storage Service (S3)](https://aws.amazon.com/s3/) by Amazon Web Services.
-
-## Software
-
-Required software to be installed on your server
-
-* `git` can be installed with `apt-get install git` on Debian/Ubuntu
-* `docker` can be installed by [following the official Docker documentation](https://docs.docker.com/engine/install/)

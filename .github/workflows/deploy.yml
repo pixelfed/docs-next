@@ -53,26 +53,29 @@ jobs:
         with:
           path: .vitepress/dist
 
-  # Deployment job
+  # Deployment live
   deploy:
+    name: Deploy live
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    needs: build
-    runs-on: ubuntu-latest
-    name: Deploy live
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          preview: true
 
   # Preview job
   preview:
-    needs: build
-    runs-on: ubuntu-latest
     name: Deploy preview
+    runs-on: ubuntu-latest
+    needs: build
     steps:
       - name: Deploy preview
         uses: rossjrw/pr-preview-action@v1
         with:
-          source-dir: .vitepress/dist
+          source-dir: .

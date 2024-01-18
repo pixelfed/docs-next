@@ -77,7 +77,7 @@ jobs:
           echo "REPO_NAME=${GITHUB_REPOSITORY#$GITHUB_REPOSITORY_OWNER/}" >> $GITHUB_ENV
       - name: Build with VitePress
         env:
-          BASE: ${env.REPO_NAME}/pr-preview/pr-${{ github.event.number }}/
+          BASE: /${env.REPO_NAME}/pr-preview/pr-${{ github.event.number }}/
         run: |
           npm run docs:build
           touch .vitepress/dist/.nojekyll

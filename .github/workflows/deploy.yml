@@ -60,7 +60,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     needs: build
     runs-on: ubuntu-latest
-    name: Deploy
+    name: Deploy live
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
@@ -70,7 +70,7 @@ jobs:
   preview:
     needs: build
     runs-on: ubuntu-latest
-    name: Deploy
+    name: Deploy preview
     steps:
       - name: Deploy preview
         uses: rossjrw/pr-preview-action@v1

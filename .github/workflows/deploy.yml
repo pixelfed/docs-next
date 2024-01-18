@@ -45,6 +45,11 @@ jobs:
         run: |
           npm run docs:build
           touch .vitepress/dist/.nojekyll
+      - name: Upload site
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-output
+          path: .vitepress/dist/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -65,10 +70,8 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          preview: true
 
-  # Preview job
+  # Deploy Preview from PR
   preview:
     name: Deploy preview
     runs-on: ubuntu-latest
@@ -78,11 +81,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Not needed if lastUpdated is not enabled
+          fetch-depth: 0 # Don't need history for deploying preview sites
       - name: Download a single artifact
         uses: actions/download-artifact@v3
         with:
-          name: github-pages
+          name: build-output
           path: .vitepress/dist
       - name: Deploy preview
         uses: rossjrw/pr-preview-action@v1

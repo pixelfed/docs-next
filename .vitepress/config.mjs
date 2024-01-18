@@ -14,7 +14,7 @@ export default defineConfig({
       dark: '/logo-white.png'
     },
 
-    siteTitle: 'Pixelfed Documentation (Next)',
+    siteTitle: 'Documentation (Next)',
 
     // https://vitepress.dev/reference/frontmatter-config#outline
     outline: {

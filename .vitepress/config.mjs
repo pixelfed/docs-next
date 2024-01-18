@@ -14,7 +14,7 @@ export default defineConfig({
       dark: '/logo-white.png'
     },
 
-    siteTitle: 'Documentation (Next)',
+    siteTitle: 'Docs (Next)',
 
     // https://vitepress.dev/reference/frontmatter-config#outline
     outline: {

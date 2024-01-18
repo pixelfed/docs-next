@@ -1,10 +1,12 @@
 import { defineConfig } from 'vitepress'
 
+const { BASE: base = '/docs-next/' } = process.env
+
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   lang: 'en-US',
   title: "Pixelfed Docs",
-  base: "/docs-next/",
+  base: base,
   description: "The official Pixelfed documentation",
   themeConfig: {
     logo: {

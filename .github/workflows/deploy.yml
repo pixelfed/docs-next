@@ -26,8 +26,9 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  deploy-live:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -46,28 +47,11 @@ jobs:
         run: |
           npm run docs:build
           touch .vitepress/dist/.nojekyll
-      - name: Upload site
-        uses: actions/upload-artifact@v3
-        with:
-          name: build-output
-          path: .vitepress/dist/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           name: github-pages
           path: .vitepress/dist
-
-  # Deployment live
-  deploy:
-    name: Deploy live
-    runs-on: ubuntu-latest
-    needs:
-      - build
-    if: github.ref == 'refs/heads/main'
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
@@ -76,18 +60,27 @@ jobs:
   preview:
     name: Deploy preview
     runs-on: ubuntu-latest
-    needs:
-      - build
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Don't need history for deploying preview sites
-      - name: Download a single artifact
-        uses: actions/download-artifact@v3
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          name: build-output
-          path: .vitepress/dist
+          node-version: 18
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Set ENV variables
+        run: |
+          echo "REPO_NAME=${GITHUB_REPOSITORY#$GITHUB_REPOSITORY_OWNER/}" >> $GITHUB_ENV
+      - name: Build with VitePress
+        env:
+          BASE: ${env.REPO_NAME}/pr-preview/pr-${{ github.event.number }}/
+        run: |
+          npm run docs:build
+          touch .vitepress/dist/.nojekyll
       - name: Deploy preview
         uses: rossjrw/pr-preview-action@v1
         with:

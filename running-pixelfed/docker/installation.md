@@ -1,5 +1,8 @@
 # Pixelfed + Docker installtion
 
+::: tip If anything is confusing, unclear, missing, or maybe even wrong on this page, then *please* let us know [by submitting a bug report](https://github.com/pixelfed/pixelfed/issues/new) :heart:
+:::
+
 Connect via SSH to your server and decide where you want to install Pixelfed.
 
 ::: info
@@ -84,3 +87,12 @@ You can use the CLI flag `--follow` to continue to see log output from the conta
 You can combine `--tail=100` and `--follow` like this `docker compose logs --tail=100 --follow`.
 
 If you only care about specific containers, you can add them to the end of the command like this `docker-compose logs web worker proxy.`
+
+### Done
+
+You made it to the end of the installation tutorial and *hopefully* you have fully functional Pixelfed instance.
+
+We recommend your next steps is to [check out how to customize your Pixelfed instance](customize.md)
+
+::: tip If anything was confusing, unclear, or maybe even wrong on this page, then *please* let us know [by submitting a bug report](https://github.com/pixelfed/pixelfed/issues/new) :heart:
+:::

@@ -1,5 +1,14 @@
 # Pixelfed + Docker customization
 
+::: tip If anything is confusing, unclear, missing, or maybe even wrong on this page, then *please* let us know [by submitting a bug report](https://github.com/pixelfed/pixelfed/issues/new) :heart:
+:::
+
+::: tip Most, if not all, configuration options for both Pixelfed and Docker is included and documented in the `.env.docker` (or `.env` file once you copied it during the installation)
+It's highly recommended to give it a read from top to bottom, or trying to search it for the thing you would like to change.
+
+We of course aim for this page to cover *everything*, and if we missed anything, please submit a Pull Request or a ticket for us :heart:
+:::
+
 ## Run script on startup
 
 When a Pixelfed container starts up, the [`ENTRYPOINT`](https://docs.docker.com/engine/reference/builder/#entrypoint) script will
@@ -97,7 +106,7 @@ By setting `DB_APPLY_NEW_MIGRATIONS_AUTOMATICALLY=1` in your `.env` file, the sc
 
 ## Build settings (arguments)
 
-::: tip All of these build arguments is configurable in your `.env` file when using the `docker-compose.yml` from Pixelfed!
+::: tip Most of these build arguments is configurable in your `.env` file when using the `docker-compose.yml` from Pixelfed!
 :::
 
 The Pixelfed Dockerfile utilizes [Docker Multi-stage builds](https://docs.docker.com/build/building/multi-stage/) and [Build arguments](https://docs.docker.com/build/guide/build-args/).
@@ -106,7 +115,7 @@ Using *build arguments* allows us to create a flexible and more maintainable Doc
 
 *Build arguments* can be configured using `--build-arg 'name=value'` for `docker build`, `docker compose build` and `docker buildx build`. For `docker-compose.yml`, the `args` key for [`build`](https://docs.docker.com/compose/compose-file/compose-file-v3/#build) can be used.
 
-::: warning All settings have two names in the title. The  first one is the build arg name (`--build-arg`) and the second is the name in your `.env` file when using Docker Compose
+::: warning Most settings have two names in the title. The first one is the build arg name (`--build-arg`) and the second is the name in your `.env` file when using Docker Compose
 :::
 
 ### `PHP_VERSION` <Badge type="tip" text="DOCKER_APP_PHP_VERSION in your .env file" />

@@ -1,5 +1,8 @@
 # Pixelfed + Docker Prerequisites
 
+::: tip If anything is confusing, unclear, missing, or maybe even wrong on this page, then *please* let us know [by submitting a bug report](https://github.com/pixelfed/pixelfed/issues/new) :heart:
+:::
+
 This guide will help you install and run Pixelfed on **your** server using [Docker Compose](https://docs.docker.com/compose/).
 
 Recommendations and requirements for hardware and software needed to run Pixelfed using Docker Compose.

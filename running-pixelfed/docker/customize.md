@@ -17,12 +17,15 @@ You can set the environment variable `DOCKER_APP_ENTRYPOINT_DEBUG=1` to show the
 
 ### Included scripts
 
+* `/docker/entrypoint.d/01-permissions.sh` (optionally) ensures permissions for files are corrected (see [fixing ownership on startup](#fixing-ownership-on-startup)).
+* `/docker/entrypoint.d/02-check-config.sh` Ensures your `.env` file is valid - like missing quotes or syntax errors.
 * `/docker/entrypoint.d/04-defaults.envsh` calculates Docker container environment variables needed for [templating](#templating) configuration files.
 * `/docker/entrypoint.d/05-templating.sh` renders [template](#templating) configuration files.
 * `/docker/entrypoint.d/10-storage.sh` ensures Pixelfed storage related permissions and commands are run.
-* `//docker/entrypoint.d/15-storage-permissions.sh` (optionally) ensures permissions for files are corrected (see [fixing ownership on startup](#fixing-ownership-on-startup))
-* `/docker/entrypoint.d/20-horizon.sh` ensures [Laravel Horizon](https://laravel.com/docs/master/horizon) used by Pixelfed is configured
-* `/docker/entrypoint.d/30-cache.sh` ensures all Pixelfed caches (router, view, config) are warmed
+* `/docker/entrypoint.d/11-first-time-setup.sh` automatically runs all "one time setup" steps for a new Pixelfed server.
+* `/docker/entrypoint.d/12-migrations.sh` optionally run database migrations on container start up.
+* `/docker/entrypoint.d/20-horizon.sh` ensures [Laravel Horizon](https://laravel.com/docs/master/horizon) used by Pixelfed is configured.
+* `/docker/entrypoint.d/30-cache.sh` ensures all Pixelfed caches (router, view, config) are primed.
 
 ### Disabling entrypoint or individual scripts
 
@@ -48,7 +51,7 @@ Variables available for templating are sourced (in order, so *last* source takes
 
 1. `env:` in your `docker-compose.yml` or `-e` in your `docker run` / `docker compose run` commands.
 1. Any exported variables in `.envsh` files loaded *before* `05-templating.sh` (e.g., any file with `04-`, `03-`, `02-`, `01-` or `00-` prefix).
-1. All key and value pairs in `/var/www/.env.docker`.
+1. All key and value pairs in `/var/www/.env.docker` (default values, you should not edit this file!)
 1. All key and value pairs in `/var/www/.env`.
 
 ### Template guide 101
@@ -76,11 +79,27 @@ The variable is a space-delimited list shown below and accepts both relative and
 * `DOCKER_APP_ENSURE_OWNERSHIP_PATHS="./storage ./bootstrap"`
 * `DOCKER_APP_ENSURE_OWNERSHIP_PATHS="/some/other/folder"`
 
+## One-time setup tasks
+
+:::tip
+The script stores `lock` files in the `storage/docker/once` folder to ensure that these tasks are only run once, so for new Pixelfed servers, you do not need to disable this behavior!
+:::
+
+The Docker container will by default try to run the required [One-time setup tasks](../generic/installation.md#one-time-setup-tasks) for you on startup.
+
+If your Pixelfed server already have run these tasks, you must disable this by setting `DOCKER_APP_RUN_ONE_TIME_SETUP_TASKS=0` in your `.env` file.
+
+## Automatic database migrations
+
+The init script will by default only *detect* if there are new database migrations - but not apply them - as these can potentially be destructive or take a long time to apply.
+
+By setting `DB_APPLY_NEW_MIGRATIONS_AUTOMATICALLY=1` in your `.env` file, the script will automatically apply new migrations when they are detected.
+
 ## Build settings (arguments)
 
 The Pixelfed Dockerfile utilizes [Docker Multi-stage builds](https://docs.docker.com/build/building/multi-stage/) and [Build arguments](https://docs.docker.com/build/guide/build-args/).
 
-Using *build arguments* allows us to create a flexible and more maintainable Dockerfile, supporting [multiple runtimes](runtimes.md) ([FPM](runtimes.md#fpm), [Nginx](runtimes.md#nginx), [Apache + mod_php](runtimes.md#apache)) and end-user flexibility without having to fork or copy the Dockerfile.
+Using *build arguments* allows us to create a flexible and more maintainable Dockerfile, supporting [multiple runtimes](runtimes.md) ([FPM](runtimes.md#fpm), [Nginx](runtimes.md#nginx-fpm), [Apache + mod_php](runtimes.md#apache)) and end-user flexibility without having to fork or copy the Dockerfile.
 
 *Build arguments* can be configured using `--build-arg 'name=value'` for `docker build`, `docker compose build` and `docker buildx build`. For `docker-compose.yml`, the `args` key for [`build`](https://docs.docker.com/compose/compose-file/compose-file-v3/#build) can be used.
 
@@ -161,7 +180,7 @@ Extra APT packages (separated by space) that should be installed inside the imag
 
 ### `NGINX_VERSION`
 
-The version of `nginx` to use when targeting [`nginx-runtime`](runtimes.md#nginx).
+The version of `nginx` to use when targeting [`nginx-runtime`](runtimes.md#nginx-fpm).
 
 Please see the [Docker Hub `nginx` page](https://hub.docker.com/_/nginx) for available versions.
 
@@ -193,7 +212,7 @@ When targeting
 
 * [`apache-runtime`](runtimes.md#apache) use `apache`
 * [`fpm-runtime`](runtimes.md#fpm) use `fpm`
-* [`nginx-runtime`](runtimes.md#nginx) use `fpm`
+* [`nginx-runtime`](runtimes.md#nginx-fpm) use `fpm`
 
 **Valid values**:
 

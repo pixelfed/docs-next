@@ -18,7 +18,7 @@ export default defineConfig({
 
     // https://vitepress.dev/reference/frontmatter-config#outline
     outline: {
-      level: [2, 3, 4],
+      level: [2, 3, 4, 5],
     },
 
     // https://vitepress.dev/reference/default-theme-config
@@ -44,9 +44,9 @@ export default defineConfig({
               { text: "Prerequisites", link: "/running-pixelfed/docker/prerequisites" },
               { text: "Installation", link: "/running-pixelfed/docker/installation" },
               { text: "Customize", link: "/running-pixelfed/docker/customize" },
-              { text: "Runtimes", link: "/running-pixelfed/docker/runtimes" },
               { text: "FAQ", link: "/running-pixelfed/docker/faq" },
-              { text: "Migrate to new setup", link: "/running-pixelfed/docker/migrating" },
+              { text: "Runtimes", link: "/running-pixelfed/docker/runtimes" },
+              { text: "Migrate to v2", link: "/running-pixelfed/docker/migrate/v2.0" },
             ],
           },
           {

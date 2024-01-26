@@ -9,7 +9,7 @@ It's highly recommended to give it a read from top to bottom, or trying to searc
 We of course aim for this page to cover *everything*, and if we missed anything, please submit a Pull Request or a ticket for us :heart:
 :::
 
-## Run script on startup
+## Run script on startup (ENTRYPOINT)
 
 When a Pixelfed container starts up, the [`ENTRYPOINT`](https://docs.docker.com/engine/reference/builder/#entrypoint) script will
 
@@ -26,21 +26,44 @@ You can set the environment variable `DOCKER_APP_ENTRYPOINT_DEBUG=1` to show the
 
 ### Included scripts
 
-* `/docker/entrypoint.d/01-permissions.sh` (optionally) ensures permissions for files are corrected (see [fixing ownership on startup](#fixing-ownership-on-startup)).
-* `/docker/entrypoint.d/02-check-config.sh` Ensures your `.env` file is valid - like missing quotes or syntax errors.
-* `/docker/entrypoint.d/04-defaults.envsh` calculates Docker container environment variables needed for [templating](#templating) configuration files.
-* `/docker/entrypoint.d/05-templating.sh` renders [template](#templating) configuration files.
-* `/docker/entrypoint.d/10-storage.sh` ensures Pixelfed storage related permissions and commands are run.
-* `/docker/entrypoint.d/11-first-time-setup.sh` automatically runs all "one time setup" steps for a new Pixelfed server.
-* `/docker/entrypoint.d/12-migrations.sh` optionally run database migrations on container start up.
-* `/docker/entrypoint.d/20-horizon.sh` ensures [Laravel Horizon](https://laravel.com/docs/master/horizon) used by Pixelfed is configured.
-* `/docker/entrypoint.d/30-cache.sh` ensures all Pixelfed caches (router, view, config) are primed.
+* `01-permissions.sh` (optionally) ensures permissions for files are corrected (see [fixing ownership on startup](#fixing-ownership-on-startup)).
+* `02-check-config.sh` Ensures your `.env` file is valid - like missing quotes or syntax errors.
+* `04-defaults.envsh` calculates Docker container environment variables needed for [templating](#templating) configuration files.
+* `05-templating.sh` renders [template](#templating) configuration files.
+* `10-storage.sh` ensures Pixelfed storage related permissions and commands are run.
+* `11-first-time-setup.sh` automatically runs all "one time setup" steps for a new Pixelfed server.
+* `12-migrations.sh` optionally run database migrations on container start up.
+* `20-horizon.sh` ensures [Laravel Horizon](https://laravel.com/docs/master/horizon) used by Pixelfed is configured.
+* `30-cache.sh` ensures all Pixelfed caches (router, view, config) are primed.
 
-### Disabling entrypoint or individual scripts
+### Disabling `ENTRYPOINT` or individual scripts
 
-To disable the entire entrypoint you can set the variable `ENTRYPOINT_SKIP=1`.
+To disable the entire `ENTRYPOINT` you can set the variable `ENTRYPOINT_SKIP=1`.
 
-To disable individual entrypoint scripts, you can add the filename to the space (`" "`) separated variable `ENTRYPOINT_SKIP_SCRIPTS`. (example: `ENTRYPOINT_SKIP_SCRIPTS="10-storage.sh 30-cache.sh"`)
+To disable individual `ENTRYPOINT` scripts, you can add the filename to the space (`" "`) separated variable `ENTRYPOINT_SKIP_SCRIPTS`. (example: `ENTRYPOINT_SKIP_SCRIPTS="10-storage.sh 30-cache.sh"`)
+
+## Override anything and everything
+
+::: tip
+With the default Pixelfed `docker-compose.yml` the `overrides` bind mount is enabled by default for both `web` and `worker` service.
+
+The `overrides` folder on the host machine is in `./docker-compose-state/overrides` and can be changed via `DOCKER_APP_HOST_OVERRIDES_PATH` in the `.env` file.
+:::
+
+If you mount a bind volume (can be read-only) in `/docker/overrides` then all files and directories within that directory will be copied on top of `/`.
+
+This enables you to create or override *anything* within the container during container startup.
+
+The copy operation happens as one of the first things in the `ENTRYPOINT` so you can put even override [templates](#templating) and the [included `ENTRYPOINT` scripts](#run-script-on-startup-entrypoint) - or add new ones!
+
+Of course it can also be used to override `php.ini`, `index.php` or any other config/script files you would want to.
+
+### Override examples
+
+1. To override `/usr/local/etc/php/php.ini` in the container, put the source file in `./docker-compose-state/overrides/usr/local/etc/php/php.ini`.
+1. To create `/a/fantastic/example.txt` in the container put the source file in `./docker-compose-state/overrides/a/fantastic/example.txt`.
+1. To override the default `/docker/templates/php.ini` template, put the source file in `./docker-compose-state/overrides/docker/templates/php.ini`.
+1. To override `/a/path/inside/the/container`, put the source file in `./docker-compose-state/overrides/a/path/inside/the/container`.
 
 ## Templating
 

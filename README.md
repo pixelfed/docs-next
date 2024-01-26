@@ -6,7 +6,7 @@ To get started, install node (version 18+) requirements and run the VitePress se
 
 ```bash
 npm i
-npm run docs:de
+npm run docs:dev
 ```
 
 ## Resources

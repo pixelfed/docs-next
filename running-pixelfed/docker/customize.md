@@ -40,7 +40,7 @@ Any file in the `/docker/templates/` directory will be templated and written to 
 
 1. To template `/usr/local/etc/php/php.ini` in the container, put the source file in `/docker/templates/usr/local/etc/php/php.ini`.
 1. To template `/a/fantastic/example.txt` in the container put the source file in `/docker/templates/a/fantastic/example.txt`.
-1. To template `/some/path/anywhere` in the container, put the source file in `/docker/templates/a/fantastic/example.txt`.
+1. To template `/some/path/anywhere` in the container, put the source file in `/docker/templates/some/path/anywhere`.
 
 ### Available variables
 

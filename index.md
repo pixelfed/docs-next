@@ -12,7 +12,7 @@ hero:
       link: https://docs.pixelfed.org
     - theme: alt
       text: Installation Guide
-      link: /running-pixelfed/prerequisites
+      link: /running-pixelfed/
     - theme: alt
       text: ActivityPub Documentation
       link: /spec/ActivityPub.html

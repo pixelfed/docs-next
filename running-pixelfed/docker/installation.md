@@ -22,7 +22,7 @@ mkdir -p /data
 ### Clone the Pixelfed project
 
 ```bash
-git clone https://github.com/pixelfed/pixelfed.git /data/pixelfed
+git clone --branch jippi-fork https://github.com/jippi/pixelfed.git /data/pixelfed
 ```
 
 ### Change directory
